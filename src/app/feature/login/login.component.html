@@ -1,9 +1,21 @@
-<form (ngSubmit)="onSubmit()">
-  <label for="email">Email</label>
-  <input id="email" [(ngModel)]="email" name="email" required>
-  
-  <label for="password">Password</label>
-  <input id="password" [(ngModel)]="password" name="password" type="password" required>
-  
-  <button type="submit">Login</button>
-</form>
+<div class="hero-container">
+  <div class="login-info">
+    <h1>Welcome to Polaris Admin</h1>
+    <p>Sign in to access your account</p>
+  </div>
+  <div class="login-form">
+    <img src="assets/images/slogan.png" alt="Polaris Logo" class="logo">
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Enter your username/email" [(ngModel)]="email">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" placeholder="Enter your password" [(ngModel)]="password">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="login()">Login</button>
+    @if(error){
+      <p class="error" class="error-message">{{error}}</p>
+    }
+  </div>
+</div>
