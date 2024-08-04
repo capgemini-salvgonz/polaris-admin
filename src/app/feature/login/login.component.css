@@ -1,0 +1,43 @@
+.hero-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  background-color: #f4f4f4; /* Fondo ligero para contraste */
+  padding: 20px;
+}
+
+.login-info-title {
+  background: white;;
+}
+
+.login-info {
+  margin-right: 50px; /* Espacio entre el título y el formulario */
+}
+
+.logo {
+  width: 556px; /* Ajusta según sea necesario */
+  margin-bottom: 20px; /* Espacio entre el logo y el formulario */
+}
+
+.login-form {
+  width: 596px; /* Ancho fijo para el formulario */
+  padding: 20px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra para destacar el formulario */
+}
+
+mat-form-field {
+  width: 100%; /* Los campos ocupan todo el ancho del formulario */
+  margin-bottom: 16px; /* Espacio entre campos */
+}
+
+button {
+  width: 100%; /* El botón ocupa todo el ancho del formulario */
+  height: 3rem;;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}

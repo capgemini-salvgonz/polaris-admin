@@ -1,5 +1,8 @@
-<div *ngIf="user">
+
+@if (user) {
   <h1>Welcome</h1>
   <p>Email: {{ user.email }}</p>
   <p>Role: {{ user.roles }}</p>
-</div>
+
+  <button (click)="redirectToLogin()">Log off</button>
+}
