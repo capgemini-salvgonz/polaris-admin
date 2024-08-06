@@ -56,10 +56,17 @@ export class LoginComponent {
       error: (error: HttpErrorResponse) => {
         this.email = '';
         this.password = '';
-        if (error.status === 401) {
-          this.error = 'Password or user incorrect';
-        } else {
-          this.error = 'An unexpected error occurred';
+
+        switch (error.status) {
+          case 401:
+            this.error = 'Password or user incorrect';
+            break;
+          case 403:
+            this.error = "";
+            alert('You do not have permission to access this application. The user is not active.');
+            break;
+          default:
+            this.error = 'An unexpected error occurred';
         }
       }
     });
