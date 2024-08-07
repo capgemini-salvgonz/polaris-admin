@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -8,6 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
 import jwt_decode from 'jwt-decode';
+
+import { AuthService } from '../../services/auth/auth.service';
+import { CredentialService } from '../../services/credentials/credential.service'
 
 @Component({
   selector: 'app-login',
@@ -27,7 +29,7 @@ export class LoginComponent {
   password: string = '';
   error: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private credService: CredentialService) {}
 
   login() {
     if (this.email === '' || this.password === '') {
@@ -44,8 +46,9 @@ export class LoginComponent {
           token: response.at
         };
 
-        if (user.roles.includes('ADM') || user.roles.includes('FS') || user.roles.includes('TS')) {
-          localStorage.setItem('user', JSON.stringify(user));
+        if (user.roles.includes('ADM') || user.roles.includes('FS') || 
+            user.roles.includes('TS') || user.roles.includes('CMDB') ) {
+          this.credService.setUser(user.email, user.roles, user.token);
           this.router.navigate(['/padmin']);
         } else {
           this.email = '';

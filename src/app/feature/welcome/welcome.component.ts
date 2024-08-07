@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 
+import { CredentialService } from '../../services/credentials/credential.service'
+
 @Component({
   selector: 'app-welcome',
   standalone: true,
@@ -14,12 +16,12 @@ import { NavbarComponent } from '../navbar/navbar.component';
 export class WelcomeComponent implements OnInit {
   user: any; 
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private credService: CredentialService) {}
 
   ngOnInit(): void {
-    const user = localStorage.getItem('user');
+    const user = this.credService.getUser();
     if (user) {
-      this.user = JSON.parse(user);
+      this.user = user;
     } else {
       this.router.navigate(['/']);
     }
