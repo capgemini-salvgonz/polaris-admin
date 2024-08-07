@@ -10,15 +10,44 @@
 <nav class="navbar navbar-expand-lg">
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/welcome">Home</a>
+      <!-- Administración Menu -->
+      <li class="nav-item" *ngIf="user.roles.includes('ADM')">
+        <button mat-button [matMenuTriggerFor]="administracion" color="primary">Administración</button>
+        <mat-menu #administracion="matMenu">
+          <button mat-menu-item routerLink="/padmin/administracion/usuarios">Usuarios</button>
+          <button mat-menu-item routerLink="/padmin/administracion/profesionales-salud">Profesionales de salud</button>
+          <button mat-menu-item routerLink="/padmin/administracion/asistentes">Asistentes</button>
+        </mat-menu>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/profile">Profile</a>
+      <!-- Finanzas Menu -->
+      <li class="nav-item" *ngIf="user.roles.includes('FS') || user.roles.includes('ADM')">
+        <button mat-button [matMenuTriggerFor]="finanza" color="primary">Finanzas</button>
+        <mat-menu #finanza="matMenu">
+          <button mat-menu-item routerLink="/padmin/finanzas/facturacion">Facturación</button>
+          <button mat-menu-item routerLink="/padmin/finanzas/pagos">Pagos</button> 
+          <button mat-menu-item routerLink="/padmin/finanzas/reportes-facturacion">Reportes de facturación</button>
+          <button mat-menu-item routerLink="/padmin/finanzas/reportes-pagos">Reportes de pagos</button>
+        </mat-menu>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/settings">Settings</a>
+      <!-- Soporte Menu -->
+      <li class="nav-item" *ngIf="user.roles.includes('TS') || user.roles.includes('ADM')">
+        <button mat-button [matMenuTriggerFor]="soporte" color="primary">Soporte</button>
+        <mat-menu #soporte="matMenu">
+          <button mat-menu-item routerLink="/padmin/soporte/issues">Issues</button>
+          <button mat-menu-item routerLink="/padmin/soporte/logs">Logs</button>
+        </mat-menu>
+      </li>
+      <!-- CMDB Menu -->
+      <li class="nav-item" *ngIf="user.roles.includes('CM') || user.roles.includes('ADM')">
+        <button mat-button [matMenuTriggerFor]="cmdb" color="primary">CMDB</button>
+        <mat-menu #cmdb="matMenu">
+          <button mat-menu-item routerLink="/padmin/cmdb/componentes">Componentes</button>
+          <button mat-menu-item routerLink="/padmin/cmdb/historial-cambios">Historial de cambios</button>
+          <button mat-menu-item routerLink="/padmin/cmdb/incidentes">Incidentes</button>
+        </mat-menu>
       </li>
     </ul>
   </div>
 </nav>
+
+<router-outlet name="view"></router-outlet>

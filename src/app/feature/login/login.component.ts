@@ -46,7 +46,7 @@ export class LoginComponent {
 
         if (user.roles.includes('ADM') || user.roles.includes('FS') || user.roles.includes('TS')) {
           localStorage.setItem('user', JSON.stringify(user));
-          this.router.navigate(['/welcome']);
+          this.router.navigate(['/padmin']);
         } else {
           this.email = '';
           this.password = '';
