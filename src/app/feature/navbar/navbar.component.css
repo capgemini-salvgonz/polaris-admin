@@ -12,11 +12,7 @@ mat-toolbar {
   margin-left: 16px;
 }
 
-div[mat-toolbar] div {
-  margin-right: 16px;
-}
-
-.user-email{
+.user-email {
   font-size: 0.75rem;
 }
 
