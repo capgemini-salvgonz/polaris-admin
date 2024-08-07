@@ -1,0 +1,26 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  margin-left: 16px;
+}
+
+div[mat-toolbar] div {
+  margin-right: 16px;
+}
+
+.user-email{
+  font-size: 0.75rem;
+}
+
+.navbar {
+  background-color: #e2e9ef;
+  padding: 0;
+}
