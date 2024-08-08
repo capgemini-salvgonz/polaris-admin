@@ -1,0 +1,19 @@
+<!-- Main Layout -->
+<div class="row mt-5">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="left-column">
+          <!-- Contenido de la columna izquierda -->
+          <ng-content select="[left]"></ng-content>
+        </div>
+      </div>
+      <div class="col-md-10 main-layout">
+        <div class="right-column">
+          <!-- Contenido de la columna derecha -->
+          <ng-content select="[right]"></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
