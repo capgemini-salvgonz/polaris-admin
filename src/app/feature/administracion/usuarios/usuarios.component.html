@@ -1,11 +1,27 @@
 
 <main-layout>
-  <div left>
-    <p>Navegación izquierda</p>
+  
+  <div left class="nav">
+
+    <button mat-raised-button extended (click)="openDialog('add')">
+      Agregar Usuario
+    </button>
+
+    <button mat-raised-button extended (click)="openDialog('search')">
+      Buscar usuario
+    </button>
+
+    <button mat-raised-button extended (click)="openDialog('export')">
+      Exportar usuarios
+    </button>
+
   </div>
+
   <div right>
     <user-list [users]="users"></user-list>
   </div>
+
 </main-layout>
+
 
 
