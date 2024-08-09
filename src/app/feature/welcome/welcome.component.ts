@@ -20,10 +20,6 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit(): void {
     const user = this.credService.getUser();
-    if (user) {
-      this.user = user;
-    } else {
-      this.router.navigate(['/']);
-    }
+    this.user = user;
   }
 }

@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 import { User } from '../../models/user.model';
-import { UserService } from '../../services/users/user.service';
-import { MainLayoutComponent } from '../../components/main-layout/main-layout.component';
 
 @Component({
   selector: 'user-list',
@@ -16,35 +16,26 @@ import { MainLayoutComponent } from '../../components/main-layout/main-layout.co
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MainLayoutComponent,
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  users: User[] = [];
-  filteredUsers: User[] = [];
-  displayedColumns: string[] = ['user_id', 'email', 'phone_number', 'roles', 'bounded_to', 'created_at', 'status'];
 
-  constructor(private userService: UserService) {}
+  @Input() users: User[] = [];
+  filteredUsers: User[] = [];
+  displayedColumns: string[] = ['user_id', 'email', 'phone_number', 'roles', 'bounded_to', 'created_at', 'status', 'actions'];
+
+  constructor() {}
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe({
-      next: (data: User[]) => {
-        this.users = data;
-        this.filteredUsers = data;
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    this.filteredUsers = this.users;
   }
 
-  decodeBase64(value : string) {
-    if (value) {
-      return atob(value);
-    }
-    return "";
+  decodeBase64(value: string): string {
+    return value ? atob(value) : '';
   }
 
   applyFilter(event: Event): void {
@@ -52,5 +43,20 @@ export class UserListComponent implements OnInit {
     this.filteredUsers = this.users.filter(user =>
       user.email.toLowerCase().includes(filterValue) || user.phone_number.toLowerCase().includes(filterValue)
     );
+  }
+
+  editUser(user: User): void {
+    // Lógica para editar usuario
+    console.log('Edit user', user);
+  }
+
+  changeStatus(user: User): void {
+    // Lógica para cambiar el estatus del usuario
+    console.log('Change status', user);
+  }
+
+  deleteUser(user: User): void {
+    // Lógica para eliminar usuario
+    console.log('Delete user', user);
   }
 }

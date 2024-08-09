@@ -7,7 +7,7 @@ export const routes: Routes = [
   { path: '', component: LoginComponent },
   {
     path: 'padmin',
-    component: WelcomeComponent,
+    loadComponent: () => import('./feature/welcome/welcome.component').then(m => m.WelcomeComponent), 
     canActivate: [AuthGuard],
     children: [
       { path: 'administracion/usuarios', loadComponent: () => import('./feature/administracion/usuarios/usuarios.component').then(m => m.UsuariosComponent), canActivate: [AuthGuard] },
