@@ -1,0 +1,18 @@
+.left-column {
+  /* Estilos para la columna izquierda */
+  height: 100vh; /* Altura completa de la vista */
+}
+
+.right-column {
+  height: 100vh; /* Altura completa de la vista */
+}
+
+.main-layout {
+  padding-right: 20px;
+}
+
+@media (max-width: 768px) {
+  .left-column, .right-column {
+    height: auto; /* Ajustar altura para dispositivos móviles */
+  }
+}

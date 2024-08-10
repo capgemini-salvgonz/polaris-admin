@@ -1,0 +1,9 @@
+button {
+  width: 100%;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.nav {
+  padding-left: 20px;
+}
