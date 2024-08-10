@@ -1,9 +1,19 @@
 button {
   width: 100%;
   display: block;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .nav {
   padding-left: 20px;
+}
+
+.white-button {
+  background-color: #e2e9ef;
+  color: rgb(119, 47, 161);
+  border: 1px solid #ccc; /* Opcional: para darle un borde ligero */
+}
+
+.white-button:hover {
+  background-color: #f0f0f0; /* Color de fondo al pasar el ratón */
 }
