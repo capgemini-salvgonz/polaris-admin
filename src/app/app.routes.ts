@@ -1,10 +1,12 @@
 import { AuthGuard } from './components/auth.guard/auth.guard'
 import { Routes } from '@angular/router';
 import { LoginComponent } from './feature/login/login.component';
-import { WelcomeComponent } from './feature/welcome/welcome.component';
+
+import { UsuariosComponent } from './feature/administracion/usuarios/usuarios.component'
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
+  // { path: '', component: UsuariosComponent },
   {
     path: 'padmin',
     loadComponent: () => import('./feature/welcome/welcome.component').then(m => m.WelcomeComponent), 

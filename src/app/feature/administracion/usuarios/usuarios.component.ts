@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { UserService } from '../../../services/users/user.service';
 
 // Dialogs
 import { UserSearchComponent } from '../../../components/user-search/user-search.component'
+import { UserAddComponent } from '../../../components/user-add/user-add.component'
 
 @Component({
   selector: 'app-usuarios',
@@ -20,38 +21,53 @@ import { UserSearchComponent } from '../../../components/user-search/user-search
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent {
-  users: User[] = [];
+  users: User[] = []
 
-  constructor(private userService: UserService, private dialog: MatDialog) {}
+  constructor(private userService: UserService, private dialog: MatDialog, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe({
       next: (data: User[]) => {
         this.users = data;
-      },
-      error: (error) => {
-        console.error(error);
       }
     });
   }
 
   openDialog(action: string): void {
-    console.log("Action: " + action);
-
-    let ref;
+    let dialogRef: MatDialogRef<any> | null = null;
 
     switch (action) {
       case 'add':
-        ref = this.dialog.open(UserSearchComponent);
+        dialogRef = this.dialog.open(UserAddComponent);
+        this.addUser(dialogRef);
         break;
       case 'search':
-        this.dialog.open(UserSearchComponent);
+        dialogRef = this.dialog.open(UserSearchComponent);
         break;
       case 'export':
-        this.dialog.open(UserSearchComponent);
+        dialogRef = this.dialog.open(UserSearchComponent);  
         break;
       default:
         break;
     }
   }
+
+  addUser(dialogRef: MatDialogRef<any> | null): void {
+    if (dialogRef) {
+      dialogRef.afterClosed().subscribe(user => {
+        if (user) {
+          this.userService.postNewUser(user).subscribe({
+            next : (newUser) => {
+              this.users = [...this.users, newUser];
+            },
+            error: (err) => {
+              alert("There were an error creating the user. Please contact to your administrator.");
+            }
+          })
+        }
+      });
+    }
+  }
+
+
 }
