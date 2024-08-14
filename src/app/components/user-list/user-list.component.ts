@@ -37,7 +37,6 @@ export class UserListComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['users']) {
-      console.log("There are changes");
       this.dataSource.data = changes['users'].currentValue;  // Actualiza la data source cuando hay cambios
     }
   }

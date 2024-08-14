@@ -21,11 +21,22 @@ export class UserService {
     }
   }
 
-  getUsers(): Observable<User[]> {
+  getHeaders() : HttpHeaders {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${this.jwt}`);
     headers = headers.set('Content-Type', "application/json");
+
+    return headers;
+  }
+
+  getUsers(): Observable<User[]> {
+    let headers = this.getHeaders();
     return this.http.get<User[]>(this.apiUrl, { headers});
+  }
+
+  postNewUser(user: User) : Observable<User> {
+    let headers = this.getHeaders();
+    return this.http.post<User>(this.apiUrl, user, { headers });
   }
 
 }
