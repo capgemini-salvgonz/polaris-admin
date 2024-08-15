@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,16 @@ export class CredentialService {
     return null;
   }
 
-  getJwt(): string|null {
+  getJwt(): string|null {  
     return this.jwt;
   }
+
+  getHeaders() : HttpHeaders {
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${this.jwt}`);
+    headers = headers.set('Content-Type', "application/json");
+
+    return headers;
+  }
+
 }
