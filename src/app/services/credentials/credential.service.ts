@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpHeaders } from '@angular/common/http';
+import { uuid } from 'uuidv4';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,7 @@ export class CredentialService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${this.jwt}`);
     headers = headers.set('Content-Type', "application/json");
+    headers = headers.set('uuid', uuid());
 
     return headers;
   }
