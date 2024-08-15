@@ -29,6 +29,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Project structure
 
+```sh
 polaris-admin/
 │
 ├── src/
@@ -49,33 +50,26 @@ polaris-admin/
 │   │   │   │   ├── dashboard.component.html
 │   │   │   │   ├── dashboard.component.css
 │   │   │   │   └── dashboard.component.spec.ts
-│   │   │   ├── user-management/
-│   │   │   │   ├── user-list/
-│   │   │   │   │   ├── user-list.component.ts
-│   │   │   │   │   ├── user-list.component.html
-│   │   │   │   │   ├── user-list.component.css
-│   │   │   │   │   └── user-list.component.spec.ts
-│   │   │   │   ├── user-detail/
-│   │   │   │   │   ├── user-detail.component.ts
-│   │   │   │   │   ├── user-detail.component.html
-│   │   │   │   │   ├── user-detail.component.css
-│   │   │   │   │   └── user-detail.component.spec.ts
+│   │   ├── feature/
+│   │   │   ├── administracion/
+│   │   │   ├── usuarios/
+│   │   │   └── perfil/
 │   │   ├── services/
 │   │   │   ├── auth.service.ts
 │   │   │   ├── user.service.ts
-│   │   │   ├── report.service.ts
+│   │   │   └── report.service.ts
 │   │   ├── models/
 │   │   │   ├── user.model.ts
-│   │   │   ├── report.model.ts
+│   │   │   └── report.model.ts
 │   │   ├── core/
 │   │   │   ├── http-interceptor.service.ts
 │   │   │   ├── auth-guard.service.ts
-│   │   │   ├── core.module.ts (si se usa)
+│   │   │   └── core.module.ts (si se usa)
 │   │   ├── shared/
 │   │   │   ├── directives/
-│   │   │   │   ├── custom-directive.directive.ts
+│   │   │   │   └── custom-directive.directive.ts
 │   │   │   ├── pipes/
-│   │   │   │   ├── custom-pipe.pipe.ts
+│   │   │   │   └── custom-pipe.pipe.ts
 │   ├── assets/
 │   │   ├── images/
 │   │   ├── icons/
@@ -91,3 +85,5 @@ polaris-admin/
 ├── package.json
 ├── tsconfig.json
 └── README.md
+```
+
