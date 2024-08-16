@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { CredentialService } from "../credentials/credential.service"
@@ -12,17 +12,22 @@ import {User} from '../../models/user.model';
 export class UserService {
 
   private apiUrl = environment.padminHostName + '/api/v1/padmin/users';
+  jwt : string | null = ""
   
   constructor (private credService : CredentialService, private http: HttpClient) {  
+    this.jwt = credService.getJwt()
   }
 
   getUsers(): Observable<User[]> {
-    let headers = this.credService.getHeaders();
-    return this.http.get<User[]>(this.apiUrl, { headers});
+    let headers = this.credService.getHeaders()
+    console.log(headers);
+    return this.http.get<User[]>(this.apiUrl, {headers});
   }
+
 
   postNewUser(user: User) : Observable<User> {
     let headers = this.credService.getHeaders();
+    console.log(headers);
     return this.http.post<User>(this.apiUrl, user, { headers });
   }
 
