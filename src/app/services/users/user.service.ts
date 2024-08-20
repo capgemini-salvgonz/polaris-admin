@@ -20,15 +20,19 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
     let headers = this.credService.getHeaders()
-    console.log(headers);
     return this.http.get<User[]>(this.apiUrl, {headers});
   }
 
 
   postNewUser(user: User) : Observable<User> {
     let headers = this.credService.getHeaders();
-    console.log(headers);
     return this.http.post<User>(this.apiUrl, user, { headers });
+  }
+
+  deleteUser(userId: number): Observable<any> {
+    let headers = this.credService.getHeaders();
+    const url = `${this.apiUrl}/${userId}`
+    return this.http.delete(url, {headers});
   }
 
 }

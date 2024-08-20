@@ -2,7 +2,7 @@
   <button (click)="redirectToLogin()" mat-icon-button class="example-icon" aria-label="Log off">
     <mat-icon>logout</mat-icon>
   </button>
-  <a class="navbar-brand" href="#">Polaris Admin</a>
+  <a class="navbar-brand" routerLink="/padmin">Polaris Admin</a>
   <span class="example-spacer"></span>
   <div class="user-email">{{ user.email }} | {{ user.roles }}</div>
 </mat-toolbar>

@@ -1,13 +1,19 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { MatTableDataSource } from '@angular/material/table';  // Importación de MatTableDataSource
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
+import { CredentialService } from '../../services/credentials/credential.service'
+import { UserService } from '../../services/users/user.service'
 import { User } from '../../models/user.model';
+import { ConfirmationDialog } from '../dialogs/confirmation-dialog/confirmation-dialog'
+
 
 @Component({
   selector: 'user-list',
@@ -18,7 +24,8 @@ import { User } from '../../models/user.model';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
@@ -26,10 +33,13 @@ import { User } from '../../models/user.model';
 export class UserListComponent implements OnInit, OnChanges {
 
   @Input() users: User[] = [];
-  dataSource = new MatTableDataSource<User>();  // Uso de MatTableDataSource
+  currentRole? : string | null = null;
+  dataSource = new MatTableDataSource<User>();
   displayedColumns: string[] = ['user_id', 'email', 'phone_number', 'roles', 'bounded_to', 'created_at', 'status', 'actions'];
 
-  constructor() {}
+  constructor(private credService: CredentialService, private userService : UserService, private dialog: MatDialog) {
+    this.currentRole = this.credService.getUser()?.roles;
+  }
 
   ngOnInit(): void {
     this.dataSource.data = this.users;  // Inicializa la data source con los usuarios
@@ -55,10 +65,34 @@ export class UserListComponent implements OnInit, OnChanges {
   }
 
   changeStatus(user: User): void {
+    const newStatus = user.status === "active" ? "blocked":"active";
     console.log('Change status', user);
   }
 
+  /**
+   * Delete a user from de database using padmin_api
+   */
   deleteUser(user: User): void {
-    console.log('Delete user', user);
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      width: '450px',
+      data: { 
+        title: 'Eliminar usuario', 
+        question: `¿Realmente desea eliminar al usuario: ${user.email}?`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userService.deleteUser(user.user_id).subscribe({
+          next: () => {
+            this.users = this.users.filter(u => u.user_id !== user.user_id);
+            this.dataSource.data = this.users;
+          },
+          error: (err) => {
+            console.error('Error deleting user:', err);
+          }
+        });
+      }
+    });
   }
 }
