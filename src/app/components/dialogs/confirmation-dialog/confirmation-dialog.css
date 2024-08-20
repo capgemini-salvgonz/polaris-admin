@@ -1,0 +1,19 @@
+h1 {
+  padding: 1rem;
+  color: white;
+  height: 3rem;
+  width: 300px;
+}
+
+.mat-dialog-content{
+  background-color: white;
+}
+
+.mat-question {
+  padding: 1rem;
+  background-color: white;
+}
+
+.question {
+  font-size: 1.2rem;
+}

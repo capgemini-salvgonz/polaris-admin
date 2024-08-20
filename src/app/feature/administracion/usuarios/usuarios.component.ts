@@ -38,7 +38,7 @@ export class UsuariosComponent {
 
     switch (action) {
       case 'add':
-        dialogRef = this.dialog.open(UserAddComponent);
+        dialogRef = this.dialog.open(UserAddComponent, {width:'40%'});
         this.addUser(dialogRef);
         break;
       case 'search':
