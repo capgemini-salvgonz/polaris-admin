@@ -32,17 +32,32 @@ import { ConfirmationDialog } from '../dialogs/confirmation-dialog/confirmation-
 })
 export class UserListComponent implements OnInit, OnChanges {
 
-  @Input() users: User[] = [];
+  users: User[] = [];
+
+  // Context variables
   currentRole? : string | null = null;
+
+  // Table data source
   dataSource = new MatTableDataSource<User>();
   displayedColumns: string[] = ['user_id', 'email', 'phone_number', 'roles', 'bounded_to', 'created_at', 'status', 'actions'];
 
+  /**
+   * Constructor
+   * @param credService used to know the role of the current user
+   * @param userService used to update and delete users
+   * @param dialog      used to manage dialog references
+   */
   constructor(private credService: CredentialService, private userService : UserService, private dialog: MatDialog) {
     this.currentRole = this.credService.getUser()?.roles;
   }
 
   ngOnInit(): void {
-    this.dataSource.data = this.users;  // Inicializa la data source con los usuarios
+    this.userService.getUsers().subscribe({
+      next: (data: User[]) => {
+        this.users = data;
+        this.dataSource.data = this.users;
+      }
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -67,6 +82,15 @@ export class UserListComponent implements OnInit, OnChanges {
   changeStatus(user: User): void {
     const newStatus = user.status === "active" ? "blocked":"active";
     console.log('Change status', user);
+  }
+
+  /**
+   * Add new user
+   * @param newUser 
+   */
+  addUserToList(newUser: User): void {
+    this.users.push(newUser);
+    this.dataSource.data = this.users; 
   }
 
   /**
