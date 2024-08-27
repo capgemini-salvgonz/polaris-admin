@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
@@ -21,16 +21,12 @@ import { UserAddComponent } from '../../../components/user-add/user-add.componen
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent {
-  users: User[] = []
+
+  @ViewChild(UserListComponent) userListComponent!: UserListComponent;
 
   constructor(private userService: UserService, private dialog: MatDialog, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe({
-      next: (data: User[]) => {
-        this.users = data;
-      }
-    });
   }
 
   openDialog(action: string): void {
@@ -58,7 +54,7 @@ export class UsuariosComponent {
         if (user) {
           this.userService.postNewUser(user).subscribe({
             next : (newUser) => {
-              this.users = [...this.users, newUser];
+              this.userListComponent.addUserToList(newUser);
             },
             error: (err) => {
               alert("There were an error creating the user. Please contact to your administrator.");
