@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatTableDataSource } from '@angular/material/table';  // Importación de MatTableDataSource
@@ -7,13 +7,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 import { CredentialService } from '../../services/credentials/credential.service'
 import { UserService } from '../../services/users/user.service'
 import { User } from '../../models/user.model';
 import { ConfirmationDialog } from '../dialogs/confirmation-dialog/confirmation-dialog'
-
+import { UserAddComponent } from '../../components/user-add/user-add.component'
 
 @Component({
   selector: 'user-list',
@@ -76,12 +76,57 @@ export class UserListComponent implements OnInit, OnChanges {
   }
 
   editUser(user: User): void {
-    console.log('Edit user', user);
+    const userToUpdate = Object.assign({}, user);
+    let dialogRef: MatDialogRef<any> = this.dialog.open(UserAddComponent, {width:'40%', data: userToUpdate});
+    dialogRef.afterClosed().subscribe(editedUser => {
+      if (editedUser) {
+        this.userService.putUser(editedUser).subscribe({
+          next: (result) => {
+            user.email = editedUser.email;
+            user.phone_number = editedUser.phone_number;
+            user.roles = editedUser.roles;
+            if(result == null) {
+              alert("Información actualizada correctamente");
+            }
+          },
+          error: (err) => {
+            alert("Hubo un error al actualizar el usuario. Por favor, contacta a tu administrador.");
+          }
+        });
+      } 
+    });
   }
 
+  /**
+   * Change user status: active|blocked
+   * @param user 
+   */
   changeStatus(user: User): void {
     const newStatus = user.status === "active" ? "blocked":"active";
-    console.log('Change status', user);
+    const userUpdatedInformation = Object.assign({}, user);
+    userUpdatedInformation.status = newStatus;
+
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      width: '500px',
+      data: { 
+        title: 'Cambio de estatus', 
+        question: `¿Realmente desea cambiar el estatus del usuario a: ${newStatus}?`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userService.putUser(userUpdatedInformation).subscribe({
+          next: () => {
+            user.status = newStatus;
+          },
+          error: (err) => {
+            alert(`There was an error trying to change the status to ${newStatus}`)
+          }
+        });
+      }
+    });
+    
   }
 
   /**
