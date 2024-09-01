@@ -6,7 +6,6 @@ import {MatButtonModule} from '@angular/material/button';
 
 import { UserListComponent } from '../../../components/user-list/user-list.component';
 import { MainLayoutComponent } from '../../../components/main-layout/main-layout.component';
-import { User } from '../../../models/user.model';
 import { UserService } from '../../../services/users/user.service';
 
 // Dialogs

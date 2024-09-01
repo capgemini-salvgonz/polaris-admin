@@ -18,21 +18,50 @@ export class UserService {
     this.jwt = credService.getJwt()
   }
 
+  /**
+   * Retrieve the list of all users
+   * @returns user list
+   */
   getUsers(): Observable<User[]> {
     let headers = this.credService.getHeaders()
     return this.http.get<User[]>(this.apiUrl, {headers});
   }
 
-
+  /**
+   * Create a user
+   * @param user 
+   * @returns 
+   */
   postNewUser(user: User) : Observable<User> {
     let headers = this.credService.getHeaders();
     return this.http.post<User>(this.apiUrl, user, { headers });
   }
 
+  /**
+   * Remove a user from database
+   * @param userId 
+   * @returns 
+   */
   deleteUser(userId: number): Observable<any> {
     let headers = this.credService.getHeaders();
     const url = `${this.apiUrl}/${userId}`
     return this.http.delete(url, {headers});
+  }
+
+  /**
+   * Update user information
+   * @param user 
+   * @returns 
+   */
+  putUser(user: User): Observable<any> {
+    let headers = this.credService.getHeaders();
+    const url = `${this.apiUrl}/${user.user_id}`;
+    return this.http.put(url, {
+      "email":        user.email,
+      "phone_number": user.phone_number,
+      "roles":        user.roles,
+      "status":       user.status
+    }, {headers});
   }
 
 }
